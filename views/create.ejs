@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="/css/style.css"
+    />
+  </head>
+  <body>
+    <form
+      method="post"
+      action="/dashboard/create"
+    >
+      <h1>Add Data</h1>
+      <input
+        type="text"
+        name="name"
+        placeholder="Name"
+      />
+      <input
+        type="number"
+        name="price"
+        placeholder="Price"
+      />
+      <input
+        type="number"
+        name="rating"
+        placeholder="Rating"
+        max="5"
+        min="1"
+      />
+      <input type="submit" />
+    </form>
+  </body>
+</html>

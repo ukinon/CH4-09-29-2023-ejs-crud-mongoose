@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="/css/style.css"
+    />
+  </head>
+  <body>
+    <form
+      method="post"
+      action="/dashboard/edit/<%= tour.id %>"
+    >
+      <h1>Edit Data</h1>
+      <input
+        type="text"
+        name="name"
+        value="<%= tour.name %>"
+        placeholder="Name"
+      />
+      <input
+        type="number"
+        name="price"
+        value="<%= tour.price %>"
+        placeholder="Price"
+      />
+      <input
+        type="number"
+        name="rating"
+        value="<%= tour.rating %>"
+        placeholder="Rating"
+      />
+      <input type="submit" />
+    </form>
+  </body>
+</html>

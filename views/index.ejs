@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="/css/style.css"
+    />
+  </head>
+  <body>
+    <h1>hello</h1>
+    <p><%- message %></p>
+    <table>
+      <th>id</th>
+      <th>nama</th>
+      <th>harga</th>
+      <th>rating</th>
+      <th>action</th>
+      <% tours.map((tour) => { %>
+      <tr>
+        <td><%- tour.id %></td>
+        <td><%- tour.name %></td>
+        <td><%- tour.price %></td>
+        <td><%- tour.rating %></td>
+        <td>
+          <a href="/dashboard/edit/<%- tour.id %>"
+            >edit</a
+          >
+          |
+          <a
+            href="/dashboard/delete/<%- tour.id %>"
+            >delete</a
+          >
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+    <a href="/dashboard/create">create data</a>
+  </body>
+</html>
