@@ -23,9 +23,11 @@ const getAllTours = async (req, res) => {
     }
 
     const tours = await Tour.find(condition)
+    const message = req.flash("message", "")
 
     res.render("index", {
       tours: tours,
+      message: message,
     })
   } catch (err) {
     res.status(400).json({
@@ -62,6 +64,7 @@ const editToursPage = async (req, res) => {
 const createTour = async (req, res) => {
   try {
     await Tour.create(req.body)
+    req.flash("message", "ditambahkan")
     res.redirect("/dashboard")
   } catch (err) {
     console.log(err)
@@ -96,12 +99,9 @@ const editTour = async (req, res) => {
   try {
     const id = req.params.id
 
-    const tour = await Tour.findByIdAndUpdate(
-      id,
-      req.body
-    )
+    await Tour.findByIdAndUpdate(id, req.body)
 
-    const success = "data berhasil diedit"
+    req.flash("message", "dirubah")
 
     res.redirect("/dashboard")
   } catch (err) {
@@ -116,9 +116,9 @@ const removeTour = async (req, res) => {
   try {
     const id = req.params.id
 
-    await Tour.findByIdAndRemove(id)
+    req.flash("message", "dihapus")
 
-    const success = "data berhasil dihapus"
+    await Tour.findByIdAndRemove(id)
 
     res.redirect("/dasboard")
   } catch (err) {
