@@ -4,11 +4,28 @@ const url = require("url")
 
 const getAllTours = async (req, res) => {
   try {
-    let message = req.query.message
-    const tours = await Tour.find()
+    const { price, name, rating } = req.query
+
+    const condition = {}
+    if (price) {
+      condition.price = { $gt: price }
+    }
+    if (name) {
+      condition.name = {
+        $regex: ".*" + name + ".*",
+        $options: "i",
+      }
+    }
+    if (rating) {
+      condition.rating = {
+        $gt: rating,
+      }
+    }
+
+    const tours = await Tour.find(condition)
+
     res.render("index", {
       tours: tours,
-      message: message,
     })
   } catch (err) {
     res.status(400).json({
@@ -44,16 +61,8 @@ const editToursPage = async (req, res) => {
 
 const createTour = async (req, res) => {
   try {
-    const newTour = await Tour.create(req.body)
-    const success = "data berhasil ditambahkan"
-    res.redirect(
-      url.format({
-        pathname: "/dashboard",
-        query: {
-          message: success,
-        },
-      })
-    )
+    await Tour.create(req.body)
+    res.redirect("/dashboard")
   } catch (err) {
     console.log(err)
     res.status(400).json({
@@ -94,14 +103,7 @@ const editTour = async (req, res) => {
 
     const success = "data berhasil diedit"
 
-    res.redirect(
-      url.format({
-        pathname: "/dashboard",
-        query: {
-          message: success,
-        },
-      })
-    )
+    res.redirect("/dashboard")
   } catch (err) {
     res.status(400).json({
       status: "failed",
@@ -114,18 +116,11 @@ const removeTour = async (req, res) => {
   try {
     const id = req.params.id
 
-    const tour = await Tour.findByIdAndRemove(id)
+    await Tour.findByIdAndRemove(id)
 
     const success = "data berhasil dihapus"
 
-    res.redirect(
-      url.format({
-        pathname: "/dashboard",
-        query: {
-          message: success,
-        },
-      })
-    )
+    res.redirect("/dasboard")
   } catch (err) {
     res.status(400).json({
       status: "failed",

@@ -21,7 +21,26 @@ const createTour = async (req, res) => {
 
 const getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find()
+    const { price, name, rating } = req.query
+
+    const condition = {}
+    if (price) {
+      condition.price = { $gt: price }
+    }
+    if (name) {
+      condition.name = {
+        $regex: ".*" + name + ".*",
+        $options: "i",
+      }
+    }
+    if (rating) {
+      condition.rating = {
+        $gt: rating,
+      }
+    }
+
+    let tours = await Tour.find(condition)
+
     res.status(200).json({
       status: "success",
       requestTime: req.requestTime,
